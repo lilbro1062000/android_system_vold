@@ -17,6 +17,7 @@
 #ifndef _VOLUME_H
 #define _VOLUME_H
 
+#ifdef __cplusplus
 #include <utils/List.h>
 
 class NetlinkEvent;
@@ -27,6 +28,7 @@ private:
     int mState;
 
 public:
+#endif
     static const int State_Init       = -1;
     static const int State_NoMedia    = 0;
     static const int State_Idle       = 1;
@@ -46,7 +48,9 @@ public:
     static const char *ASECDIR;
 
     static const char *LOOPDIR;
+    static const char *FUSEDIR;
 
+#ifdef __cplusplus
 protected:
     char *mLabel;
     char *mMountpoint;
@@ -67,7 +71,7 @@ public:
 
     int mountVol();
     int unmountVol(bool force, bool revert);
-    int formatVol();
+    int formatVol(const char *fstype = NULL);
 
     const char *getLabel() { return mLabel; }
     const char *getMountpoint() { return mMountpoint; }
@@ -99,9 +103,16 @@ private:
     int createBindMounts();
     int doUnmount(const char *path, bool force);
     int doMoveMount(const char *src, const char *dst, bool force);
+    int doFuseMount(const char *src, const char *dst);
     void protectFromAutorunStupidity();
 };
 
 typedef android::List<Volume *> VolumeCollection;
 
+extern "C" {
+#endif
+    const char *stateToStr(int state);
+#ifdef __cplusplus
+};
+#endif
 #endif
