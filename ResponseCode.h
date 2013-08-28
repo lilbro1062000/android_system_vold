@@ -17,10 +17,8 @@
 #ifndef _RESPONSECODE_H
 #define _RESPONSECODE_H
 
-#ifdef __cplusplus
 class ResponseCode {
 public:
-#endif
     // 100 series - Requestion action was initiated; expect another reply
     // before proceeding with a new command.
     static const int ActionInitiated  = 100;
@@ -64,8 +62,7 @@ public:
     static const int VolumeDiskInserted            = 630;
     static const int VolumeDiskRemoved             = 631;
     static const int VolumeBadRemoval              = 632;
-#ifdef __cplusplus
+
     static int convertFromErrno();
 };
-#endif
 #endif

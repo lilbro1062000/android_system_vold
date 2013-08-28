@@ -196,7 +196,7 @@ int VolumeManager::listVolumes(SocketClient *cli) {
     return 0;
 }
 
-int VolumeManager::formatVolume(const char *label, const char *fstype) {
+int VolumeManager::formatVolume(const char *label) {
     Volume *v = lookupVolume(label);
 
     if (!v) {
@@ -209,7 +209,7 @@ int VolumeManager::formatVolume(const char *label, const char *fstype) {
         return -1;
     }
 
-    return v->formatVol(fstype);
+    return v->formatVol();
 }
 
 int VolumeManager::getObbMountPath(const char *sourceFile, char *mountPath, int mountPathLen) {
@@ -958,7 +958,7 @@ int VolumeManager::mountAsec(const char *id, const char *key, int ownerUid) {
 
     int written = snprintf(mountPoint, sizeof(mountPoint), "%s/%s", Volume::ASECDIR, id);
     if ((written < 0) || (size_t(written) >= sizeof(mountPoint))) {
-        SLOGE("ASEC mount failed: couldn't construct mountpoint %s", id);
+        SLOGE("ASEC mount failed: couldn't construct mountpoint", id);
         return -1;
     }
 
@@ -1105,7 +1105,7 @@ int VolumeManager::mountObb(const char *img, const char *key, int ownerGid) {
 
     int written = snprintf(mountPoint, sizeof(mountPoint), "%s/%s", Volume::LOOPDIR, idHash);
     if ((written < 0) || (size_t(written) >= sizeof(mountPoint))) {
-        SLOGE("OBB mount failed: couldn't construct mountpoint %s", img);
+        SLOGE("OBB mount failed: couldn't construct mountpoint", img);
         return -1;
     }
 
